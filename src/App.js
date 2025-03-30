@@ -1,18 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Canvas from "./components/Canvas";
 import Toolbar from "./components/Toolbar";
+import Dock from "./components/Dock";
+import BrushPreview from "./components/BrushPreview";
 
 const App = () => {
-  return (
-    <div className="h-screen w-screen flex bg-gray-100 overflow-hidden">
-      {/* Sidebar Toolbar */}
-      <div className="w-20 bg-white shadow-lg z-10 flex flex-col items-center py-4">
-        <Toolbar />
-      </div>
+  const [uiHovered, setUiHovered] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
 
-      {/* Main Canvas Area */}
+  const closeSubmenus = () => setOpenSubmenu(null);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (
+        !e.target.closest("button") &&
+        !e.target.closest(".mood-picker") &&
+        !e.target.closest(".emotion-style-picker") &&
+        !e.target.closest(".dock")
+      ) {
+        closeSubmenus();
+      }
+    };
+    window.addEventListener("mousedown", handleClick);
+    return () => window.removeEventListener("mousedown", handleClick);
+  }, []);
+
+  return (
+    <div className="flex h-screen w-screen bg-gradient-to-br from-indigo-100 to-yellow-100 overflow-hidden">
+      {/* Mood Brush Toolbar */}
+      <Toolbar
+        openSubmenu={openSubmenu}
+        setOpenSubmenu={setOpenSubmenu}
+        closeSubmenus={closeSubmenus}
+        onMouseEnterUI={() => setUiHovered(true)}
+        onMouseLeaveUI={() => setUiHovered(false)}
+      />
+
+      {/* Canvas Area */}
       <div className="flex-1 relative">
-        <Canvas />
+        <BrushPreview uiHovered={uiHovered} />
+        <Canvas onCanvasClick={closeSubmenus} />
+        <Dock
+          closeSubmenus={closeSubmenus}
+          onMouseEnterUI={() => setUiHovered(true)}
+          onMouseLeaveUI={() => setUiHovered(false)}
+        />
       </div>
     </div>
   );

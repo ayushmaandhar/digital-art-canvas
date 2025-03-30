@@ -1,43 +1,57 @@
 import { useEffect, useRef, useState } from "react";
 import { useCanvasContext } from "../context/CanvasContext";
 
-const useCanvas = (canvasRef, tool, color, size) => {
+const useCanvas = (canvasRef) => {
+  const {
+    mood,
+    strokeSize,
+    moodConfigs,
+    saveState,
+    addStroke,
+    bgTheme,
+  } = useCanvasContext();
+
   const [isDrawing, setIsDrawing] = useState(false);
   const ctxRef = useRef(null);
-  const { saveState } = useCanvasContext();
+  const pathRef = useRef([]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || canvas.dataset.initialized) return;
 
     const ctx = canvas.getContext("2d");
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
-    ctx.lineWidth = size;
-    ctx.strokeStyle = color;
-
     ctxRef.current = ctx;
 
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = canvas.offsetWidth * dpr;
+    canvas.height = canvas.offsetHeight * dpr;
+    ctx.scale(dpr, dpr);
 
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    canvas.dataset.initialized = "true";
+    saveState();
+  }, [canvasRef, saveState]);
 
-    saveState(); // Save the blank canvas on load
-  }, [canvasRef]);
+  const applyMoodStyle = () => {
+    const ctx = ctxRef.current;
+    if (!ctx) return;
 
-  useEffect(() => {
-    if (ctxRef.current) {
-      ctxRef.current.strokeStyle = tool === "eraser" ? "#ffffff" : color;
-      ctxRef.current.lineWidth = size;
-    }
-  }, [tool, color, size]);
+    const config = moodConfigs[mood] || moodConfigs["joy"];
+    ctx.strokeStyle = config.color;
+    ctx.lineWidth = strokeSize;
+    ctx.setLineDash(config.lineDash || []);
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = config.shadow;
+    ctx.globalAlpha = bgTheme === "night" ? 0.9 : 1;
+  };
 
   const startDrawing = ({ nativeEvent }) => {
+    applyMoodStyle();
     const { offsetX, offsetY } = nativeEvent;
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(offsetX, offsetY);
+    pathRef.current = [{ x: offsetX, y: offsetY }];
     setIsDrawing(true);
   };
 
@@ -46,21 +60,22 @@ const useCanvas = (canvasRef, tool, color, size) => {
     const { offsetX, offsetY } = nativeEvent;
     ctxRef.current.lineTo(offsetX, offsetY);
     ctxRef.current.stroke();
+    pathRef.current.push({ x: offsetX, y: offsetY });
   };
 
   const stopDrawing = () => {
-    if (isDrawing) {
-      ctxRef.current.closePath();
-      setIsDrawing(false);
-      saveState();
-    }
+    if (!isDrawing) return;
+    ctxRef.current.closePath();
+    setIsDrawing(false);
+    saveState();
+    addStroke({
+      path: pathRef.current,
+      mood,
+      size: strokeSize,
+    });
   };
 
-  return {
-    startDrawing,
-    draw,
-    stopDrawing,
-  };
+  return { startDrawing, draw, stopDrawing };
 };
 
 export default useCanvas;

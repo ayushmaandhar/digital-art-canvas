@@ -1,14 +1,19 @@
 import React from "react";
 import clsx from "clsx";
 
+/**
+ * A single icon button in the toolbar
+ */
 const ToolButton = ({ icon, label, isActive, onClick }) => {
   return (
     <button
-      onClick={onClick}
       title={label}
+      onClick={onClick}
       className={clsx(
-        "w-12 h-12 rounded-xl flex items-center justify-center shadow-md transition-all",
-        isActive ? "bg-blue-500 text-white" : "bg-gray-200 hover:bg-gray-300"
+        "w-12 h-12 rounded-xl flex items-center justify-center shadow-md transition-all duration-150",
+        isActive
+          ? "bg-indigo-500 text-white"
+          : "bg-white text-gray-700 hover:bg-indigo-100"
       )}
     >
       {icon}
