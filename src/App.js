@@ -3,10 +3,12 @@ import Canvas from "./components/Canvas";
 import Toolbar from "./components/Toolbar";
 import Dock from "./components/Dock";
 import BrushPreview from "./components/BrushPreview";
+import IntroModal from "./components/IntroModal";
 
 const App = () => {
   const [uiHovered, setUiHovered] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null);
+  const [showIntro, setShowIntro] = useState(true);
 
   const closeSubmenus = () => setOpenSubmenu(null);
 
@@ -27,6 +29,7 @@ const App = () => {
 
   return (
     <div className="flex h-screen w-screen bg-gradient-to-br from-indigo-100 to-yellow-100 overflow-hidden">
+      {showIntro && <IntroModal onClose={() => setShowIntro(false)} />}
       {/* Mood Brush Toolbar */}
       <Toolbar
         openSubmenu={openSubmenu}
