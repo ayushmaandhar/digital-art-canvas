@@ -6,6 +6,8 @@ A beautifully crafted, emotion-powered drawing app built in **React + Tailwind**
 This project is built for creative flow, intuitive interaction, and visual polish — a **frontend-only masterpiece** designed to win hackathons.
 
 ---
+Check out at 👉 https://digital-art-canvas-git-main-ayushmaan-dhars-projects.vercel.app/
+---
 
 ## 📸 Preview
 
@@ -67,8 +69,7 @@ src/
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/yourusername/moodcanvas.git
-cd moodcanvas
+git clone https://https://github.com/ayushmaandhar/digital-art-canvas.git
 ```
 
 ### 2. Install Dependencies
