@@ -1,70 +1,120 @@
-# Getting Started with Create React App
+# 🧠 MoodCanvas
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A beautifully crafted, emotion-powered drawing app built in **React + Tailwind**.  
+🎨 Pick your mood. 🖌️ Draw your thoughts. 🌗 Toggle themes. 🌀 Replay your strokes.  
 
-## Available Scripts
+This project is built for creative flow, intuitive interaction, and visual polish — a **frontend-only masterpiece** designed to win hackathons.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 📸 Preview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+![MoodCanvas Demo](./public/demo.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## ✨ Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| 🌈 Mood-Based Brushes | Choose between **Joy**, **Chaos**, and **Calm**. Each mood changes the color, shadow, and stroke style. |
+|-----------------------|-----------------------------------------------------------------------------------------------------|
+| 🧠 Live Brush Preview | See your brush follow your cursor with real-time size and glow.                                      |
+| 🌗 Theme Modes        | Toggle between **Daylight**, **Dusk**, and **Night** themes. Dynamic gradients keep it elegant.     |
+| 🌀 Timelapse Replay   | Replay your brush strokes step-by-step — like a drawing memory lane.                                |
+| 🧼 Undo & Redo        | Go back or forward through your drawing history without distortion or scale issues.                 |
+| 📥 Export Drawing     | Download your art with one click as a `.png` snapshot.                                               |
+| ✨ Intro Modal        | On first load, users are greeted with an elegant feature-rich welcome screen.                       |
+| 💬 Contextual Hints  | Hovering over any icon reveals its purpose with smooth floating tooltips.                           |
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🧪 Tech Stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- ⚛️ React (Create React App)
+- 🌬️ Tailwind CSS
+- 🎨 react-colorful (for color picker, if needed)
+- 🖼️ HTML Canvas API
+- 🧠 React Context (state sharing across components)
+- 🧰 Lucide Icons (for aesthetic, consistent icons)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📁 Folder Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+src/
+├── components/
+│   ├── Canvas.jsx
+│   ├── Toolbar.jsx
+│   ├── Dock.jsx
+│   ├── BrushPreview.jsx
+│   ├── IntroModal.jsx
+│   ├── TooltipLabel.jsx
+│   └── ToolButton.jsx
+├── context/
+│   └── CanvasContext.jsx
+├── hooks/
+│   ├── useCanvas.js
+│   └── useCanvasInitializer.js
+├── App.js
+├── index.js
+└── index.css
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🚀 Getting Started
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 1. Clone the Repo
 
-## Learn More
+```bash
+git clone https://github.com/yourusername/moodcanvas.git
+cd moodcanvas
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 2. Install Dependencies
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm install
+```
 
-### Code Splitting
+### 3. Run the App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```bash
+npm start
+```
 
-### Analyzing the Bundle Size
+> Runs the app in development mode — open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 🧠 Key Logic Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- All mood settings, background themes, brush sizes, and canvas controls are managed via **React Context**.
+- Undo/redo works by saving **image snapshots** (`canvas.toDataURL()`), and restoring with safe scaling.
+- The canvas uses **devicePixelRatio** scaling for Retina/high-res support.
+- Brush stroke replay is animated line-by-line with async loops.
+- No backend, no external auth — just pure frontend finesse.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## 📦 Build
 
-### Deployment
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> Creates a production-ready build in the `build/` folder. You can deploy it on **Verbal**, **Netlify**, **Vercel**, or any static host.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 💡 Ideas for Future Enhancements
+
+- Add **custom color picker**
+- Add **pressure-sensitive drawing** (with pointer events)
+- Allow **saving multiple artworks**
+- Add **lightning reaction stroke effects**
+- Collaborative canvas (multi-user drawing)
+
+---
+
+## 🧑‍🎨 Made with ❤️ by Ayushmaan
